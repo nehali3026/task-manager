@@ -45,27 +45,33 @@ function App() {
           </button>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {tasks.map((task) => (
-            <TaskCard
-              key={task.id}
-              task={task}
-              onView={() => {
-                setSelected(task);
-                setMode("view");
-              }}
-              onEdit={() => {
-                setSelected(task);
-                setMode("edit");
-              }}
-              onDelete={async () => {
-                if (task.id) {
-                  await deleteTask(task.id);
-                  fetchTasks();
-                }
-              }}
-            />
-          ))}
+        <div
+          className={`${tasks?.length > 0 ? "grid gap-6 sm:grid-cols-2 lg:grid-cols-3" : "grid grid-cols-1 text-center"}`}
+        >
+          {tasks?.length > 0 ? (
+            tasks.map((task) => (
+              <TaskCard
+                key={task.id}
+                task={task}
+                onView={() => {
+                  setSelected(task);
+                  setMode("view");
+                }}
+                onEdit={() => {
+                  setSelected(task);
+                  setMode("edit");
+                }}
+                onDelete={async () => {
+                  if (task.id) {
+                    await deleteTask(task.id);
+                    fetchTasks();
+                  }
+                }}
+              />
+            ))
+          ) : (
+            <p>No Task Found</p>
+          )}
         </div>
       </div>
 
